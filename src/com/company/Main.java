@@ -19,16 +19,23 @@ public class Main {
         while (i == 0) {
             choice = sc.nextLine();
             choice = choice.toLowerCase();
-            if (choice.equals("calculate")) {
-                calc();
-            } else if (choice.equals("bubble sort")) {
-                sort();
-            } else if (choice.equals("change precision")) {
-                precision();
-            } else if (choice.equals("equation solver")) {
-                solver();
-            } else if (choice.equals("exit")) {
-                return;
+            switch (choice) {
+                case "calculate":
+                    calc();
+                    break;
+                case "change precision":
+                    precision();
+                    break;
+                case "bubble sort":
+                    sort();
+                    break;
+                case "equation solver":
+                    solver();
+                    break;
+                case "exit":
+                    return;
+                default:
+                    System.out.println("Unrecognised input");
             }
         }
 
@@ -37,31 +44,32 @@ public class Main {
     static void precision() {
         int pp = 0;
         System.out.println("Choose how many decimal points to display (1 - 5)");
-        while (pp == 0) {
-            try {
-                p = sc.nextInt();
-                if (p == 1) {
+        try {
+            p = sc.nextInt();
+            switch (p) {
+                case 1:
                     decimalFormat = new DecimalFormat(".#");
-                    pp++;
-                } else if (p == 2) {
+                    break;
+                case 2:
                     decimalFormat = new DecimalFormat(".##");
-                    pp++;
-                } else if (p == 3) {
+                    break;
+                case 3:
                     decimalFormat = new DecimalFormat(".###");
-                    pp++;
-                } else if (p == 4) {
+                    break;
+                case 4:
                     decimalFormat = new DecimalFormat(".####");
-                    pp++;
-                } else if (p == 5) {
+                    break;
+                case 5:
                     decimalFormat = new DecimalFormat(".#####");
-                    pp++;
-                }
-            } catch (InputMismatchException e) {
-                System.out.println("Bad input");
-                pp++;
+                    break;
+                default:
+                    System.out.println("Cannot display " + p + " decimal points");
+                    p = 1;
             }
-            System.out.println("Choose an option\nCalculate\nChange precision (current precision is set at: " + p + ")\nBubble Sort\nEquation solver\nExit");
+        } catch (InputMismatchException e) {
+            System.out.println("Bad input");
         }
+        System.out.println("Choose an option\nCalculate\nChange precision (current precision is set at: " + p + ")\nBubble Sort\nEquation solver\nExit");
     }
 
     static void calc() {
@@ -114,7 +122,7 @@ public class Main {
                 System.out.println("Choose an option\nCalculate\nChange precision (current precision is set at: " + p + ")\nBubble Sort\nEquation solver\nExit");
             }
         } catch (NumberFormatException e) {
-            System.out.println("Unrecognized command");
+            System.out.println("Unrecognised command");
             System.out.println("Choose an option\nCalculate\nChange precision (current precision is set at: " + p + ")\nBubble Sort\nEquation solver\nExit");
         }
     }
@@ -126,35 +134,49 @@ public class Main {
         System.out.println("Enter how many numbers to sort");
         amm = sc.nextInt();
 
-        int sorter[] = new int[amm];
+        if(amm > 0) {
+            int sorter[] = new int[amm];
 
-        System.out.println("Enter the " + amm + " numbers to sort (type in one number and press enter, then keep repeating till the desired amount is reached");
+            System.out.println("Enter the " + amm + " numbers to sort (type in one number and press enter, then keep repeating till the desired amount is reached");
 
-        for (int i = 0; i < amm; i++) {
-            sorter[i] = sc.nextInt();
-        }
+            for (int i = 0; i < amm; i++) {
+                sorter[i] = sc.nextInt();
+            }
 
-        for (int j = 0; j < (amm - 1); j++) {
-            for (int k = 0; k < amm - i - 1; k++) {
-                if (sorter[k] > sorter[k + 1]) {
-                    temp = sorter[k];
-                    sorter[k] = sorter[k + 1];
-                    sorter[k + 1] = temp;
+            for (int j = 0; j < (amm - 1); j++) {
+                for (int k = 0; k < amm - i - 1; k++) {
+                    if (sorter[k] > sorter[k + 1]) {
+                        temp = sorter[k];
+                        sorter[k] = sorter[k + 1];
+                        sorter[k + 1] = temp;
+                    }
                 }
             }
-        }
-        System.out.println("Sorted numbers: ");
-        for (int s = 0; s < amm; s++) {
-            System.out.print(sorter[s] + " ");
+            System.out.println("Sorted numbers: ");
+            for (int s = 0; s < amm; s++) {
+                System.out.print(sorter[s] + " ");
+            }
+        }else{
+            System.out.println("Nothing to sort");
         }
         System.out.println();
         System.out.println("Choose an option\nCalculate\nChange precision (current precision is set at: " + p + ")\nBubble Sort\nEquation solver\nExit");
     }
 
     static void solver() {
-        System.out.println("Do you want to use precision? (current precision is set at: " + p + ") Y/N");
-        String ans = sc.nextLine();
-        System.out.println("Enter the numbers as follows:\nEquation format is ax + b = c\na - first number");
+        int z = 0;
+        String ans = null;
+        System.out.println("Do you want to round the result? (current precision is set at: " + p + ") Y/N");
+        while (z == 0) {
+            ans = sc.nextLine();
+            ans = ans.toLowerCase();
+            if (ans.equals("y") || ans.equals("n")) {
+                z++;
+            } else {
+                System.out.println("Unrecognised input");
+            }
+        }
+        System.out.println("Equation format is ax + b = c\nEnter the numbers as follows:\na - first number");
         double a = sc.nextDouble();
         System.out.println("b - second number");
         double b = sc.nextDouble();
@@ -162,7 +184,7 @@ public class Main {
         double c = sc.nextDouble();
         double sum = c - b;
         sum /= a;
-        if (ans == "Y" || ans == "y") {
+        if (ans.equals("y")) {
             System.out.println(decimalFormat.format(sum));
         } else {
             System.out.println("X is: " + sum);
