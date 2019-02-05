@@ -18,15 +18,16 @@ public class Main {
         System.out.println("Choose an option\nCalculate\nChange precision (current precision is set at: " + p + ")\nBubble Sort\nEquation solver\nExit");
         while (i == 0) {
             choice = sc.nextLine();
-            if (choice.equals("Calculate") || choice.equals("calculate")) {
+            choice = choice.toLowerCase();
+            if (choice.equals("calculate")) {
                 calc();
-            } else if (choice.equals("Bubble sort") || choice.equals("bubble sort")) {
+            } else if (choice.equals("bubble sort")) {
                 sort();
-            } else if (choice.equals("Change precision") || choice.equals("change precision")) {
+            } else if (choice.equals("change precision")) {
                 precision();
-            } else if (choice.equals("Equation solver") || choice.equals("equation solver")) {
+            } else if (choice.equals("equation solver")) {
                 solver();
-            } else if (choice.equals("Exit") || choice.equals("exit")) {
+            } else if (choice.equals("exit")) {
                 return;
             }
         }
