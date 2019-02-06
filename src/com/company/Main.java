@@ -7,16 +7,15 @@ import java.util.Scanner;
 
 public class Main {
 
-    static DecimalFormat decimalFormat = new DecimalFormat(".#");
-    static Scanner sc = new Scanner(System.in);
-    static int p = 1;
-    static int i = 0;
+    private static DecimalFormat decimalFormat = new DecimalFormat(".#");
+    private static Scanner sc = new Scanner(System.in);
+    private static int p = 1;
 
     public static void main(String[] args) {
 
         String choice;
         System.out.println("Choose an option\nCalculate\nChange precision (current precision is set at: " + p + ")\nBubble Sort\nEquation solver\nExit");
-        while (i == 0) {
+        while (true) {
             choice = sc.nextLine();
             choice = choice.toLowerCase();
             switch (choice) {
@@ -41,7 +40,7 @@ public class Main {
 
     }
 
-    static void precision() {
+    private static void precision() {
         int pp = 0;
         System.out.println("Choose how many decimal points to display (1 - 5)");
         try {
@@ -72,7 +71,7 @@ public class Main {
         System.out.println("Choose an option\nCalculate\nChange precision (current precision is set at: " + p + ")\nBubble Sort\nEquation solver\nExit");
     }
 
-    static void calc() {
+    private static void calc() {
         System.out.println("Enter two numbers and an operator and spaces between them (Ex. 12 + 15)");
         String insertVal = sc.nextLine();
         String[] split = insertVal.split(" ");
@@ -127,7 +126,7 @@ public class Main {
         }
     }
 
-    static void sort() {
+    private static void sort() {
         int temp;
         int amm;
 
@@ -135,7 +134,7 @@ public class Main {
         amm = sc.nextInt();
 
         if(amm > 0) {
-            int sorter[] = new int[amm];
+            int[] sorter = new int[amm];
 
             System.out.println("Enter the " + amm + " numbers to sort (type in one number and press enter, then keep repeating till the desired amount is reached");
 
@@ -144,7 +143,7 @@ public class Main {
             }
 
             for (int j = 0; j < (amm - 1); j++) {
-                for (int k = 0; k < amm - i - 1; k++) {
+                for (int k = 0; k < amm - 1; k++) {
                     if (sorter[k] > sorter[k + 1]) {
                         temp = sorter[k];
                         sorter[k] = sorter[k + 1];
@@ -163,7 +162,7 @@ public class Main {
         System.out.println("Choose an option\nCalculate\nChange precision (current precision is set at: " + p + ")\nBubble Sort\nEquation solver\nExit");
     }
 
-    static void solver() {
+   private static void solver() {
         int z = 0;
         String ans = null;
         System.out.println("Do you want to round the result? (current precision is set at: " + p + ") Y/N");
