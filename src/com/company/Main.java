@@ -131,62 +131,66 @@ public class Main {
         int amm;
 
         System.out.println("Enter how many numbers to sort");
-        amm = sc.nextInt();
+        try {
+            amm = sc.nextInt();
 
-        if(amm > 0) {
-            int[] sorter = new int[amm];
+            if (amm > 0) {
+                int[] sorter = new int[amm];
 
-            System.out.println("Enter the " + amm + " numbers to sort (type in one number and press enter, then keep repeating till the desired amount is reached");
+                System.out.println("Enter the " + amm + " numbers to sort (type in one number and press enter, then keep repeating till the desired amount is reached");
 
-            for (int i = 0; i < amm; i++) {
-                sorter[i] = sc.nextInt();
-            }
+                for (int i = 0; i < amm; i++) {
+                    sorter[i] = sc.nextInt();
+                }
 
-            for (int j = 0; j < (amm - 1); j++) {
-                for (int k = 0; k < amm - 1; k++) {
-                    if (sorter[k] > sorter[k + 1]) {
-                        temp = sorter[k];
-                        sorter[k] = sorter[k + 1];
-                        sorter[k + 1] = temp;
+                for (int j = 0; j < (amm - 1); j++) {
+                    for (int k = 0; k < amm - 1; k++) {
+                        if (sorter[k] > sorter[k + 1]) {
+                            temp = sorter[k];
+                            sorter[k] = sorter[k + 1];
+                            sorter[k + 1] = temp;
+                        }
                     }
                 }
+                System.out.println("Sorted numbers: ");
+                for (int s = 0; s < amm; s++) {
+                    System.out.print(sorter[s] + " ");
+                }
+            } else {
+                System.out.println("Nothing to sort");
             }
-            System.out.println("Sorted numbers: ");
-            for (int s = 0; s < amm; s++) {
-                System.out.print(sorter[s] + " ");
-            }
-        }else{
-            System.out.println("Nothing to sort");
+        } catch (InputMismatchException e) {
+            System.out.println("Unrecognised input");
         }
         System.out.println();
         System.out.println("Choose an option\nCalculate\nChange precision (current precision is set at: " + p + ")\nBubble Sort\nEquation solver\nExit");
     }
 
-   private static void solver() {
-        int z = 0;
-        String ans = null;
+    private static void solver() {
+        String ans;
         System.out.println("Do you want to round the result? (current precision is set at: " + p + ") Y/N");
-        while (z == 0) {
-            ans = sc.nextLine();
-            ans = ans.toLowerCase();
-            if (ans.equals("y") || ans.equals("n")) {
-                z++;
-            } else {
-                System.out.println("Unrecognised input");
+        ans = sc.nextLine();
+        ans = ans.toLowerCase();
+        if (ans.equals("y") || ans.equals("n")) {
+            System.out.println("Equation format is ax + b = c\nEnter the numbers as follows:\na - first number");
+            try {
+                double a = sc.nextDouble();
+                System.out.println("b - second number");
+                double b = sc.nextDouble();
+                System.out.println("c - third number");
+                double c = sc.nextDouble();
+                double sum = c - b;
+                sum /= a;
+                if (ans.equals("y")) {
+                    System.out.println(decimalFormat.format(sum));
+                } else {
+                    System.out.println("X is: " + sum);
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Unrecognized input");
             }
-        }
-        System.out.println("Equation format is ax + b = c\nEnter the numbers as follows:\na - first number");
-        double a = sc.nextDouble();
-        System.out.println("b - second number");
-        double b = sc.nextDouble();
-        System.out.println("c - third number");
-        double c = sc.nextDouble();
-        double sum = c - b;
-        sum /= a;
-        if (ans.equals("y")) {
-            System.out.println(decimalFormat.format(sum));
         } else {
-            System.out.println("X is: " + sum);
+            System.out.println("Unrecognised input");
         }
         System.out.println("Choose an option\nCalculate\nChange precision (current precision is set at: " + p + ")\nBubble Sort\nEquation solver\nExit");
     }
