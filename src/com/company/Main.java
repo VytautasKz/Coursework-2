@@ -8,15 +8,18 @@ import java.util.Scanner;
 public class Main {
 
     private static DecimalFormat decimalFormat = new DecimalFormat(".#");
-    private static Scanner sc = new Scanner(System.in);
     private static int p = 1;
 
     public static void main(String[] args) {
+        menu();
+    }
 
-        String choice;
+    private static void menu(){
+        Scanner menuread = new Scanner(System.in);
         System.out.println("Choose an option\nCalculate\nChange precision (current precision is set at: " + p + ")\nBubble Sort\nEquation solver\nExit");
         while (true) {
-            choice = sc.nextLine();
+            String choice;
+            choice = menuread.nextLine();
             choice = choice.toLowerCase();
             switch (choice) {
                 case "calculate":
@@ -34,17 +37,17 @@ public class Main {
                 case "exit":
                     return;
                 default:
-                    System.out.println("Unrecognised input");
+                    System.out.println("Bad menu input");
+
             }
         }
-
     }
 
     private static void precision() {
-        int pp = 0;
+        Scanner precis = new Scanner(System.in);
         System.out.println("Choose how many decimal points to display (1 - 5)");
         try {
-            p = sc.nextInt();
+            p = precis.nextInt();
             switch (p) {
                 case 1:
                     decimalFormat = new DecimalFormat(".#");
@@ -66,14 +69,15 @@ public class Main {
                     p = 1;
             }
         } catch (InputMismatchException e) {
-            System.out.println("Bad input");
+            System.out.println("Bad decimal point input");
         }
         System.out.println("Choose an option\nCalculate\nChange precision (current precision is set at: " + p + ")\nBubble Sort\nEquation solver\nExit");
     }
 
     private static void calc() {
+        Scanner calcu = new Scanner(System.in);
         System.out.println("Enter two numbers and an operator and spaces between them (Ex. 12 + 15)");
-        String insertVal = sc.nextLine();
+        String insertVal = calcu.nextLine();
         String[] split = insertVal.split(" ");
         Main2 calculator = new Main2();
         try {
@@ -120,13 +124,14 @@ public class Main {
                 System.out.println("Bad equation format");
                 System.out.println("Choose an option\nCalculate\nChange precision (current precision is set at: " + p + ")\nBubble Sort\nEquation solver\nExit");
             }
-        } catch (NumberFormatException e) {
-            System.out.println("Unrecognised command");
+        } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+            System.out.println("Unrecognised calculator command");
             System.out.println("Choose an option\nCalculate\nChange precision (current precision is set at: " + p + ")\nBubble Sort\nEquation solver\nExit");
         }
     }
 
     private static void sort() {
+        Scanner sc = new Scanner(System.in);
         int temp;
         int amm;
 
@@ -160,25 +165,26 @@ public class Main {
                 System.out.println("Nothing to sort");
             }
         } catch (InputMismatchException e) {
-            System.out.println("Unrecognised input");
+            System.out.println("Unrecognised sorter input");
         }
         System.out.println();
         System.out.println("Choose an option\nCalculate\nChange precision (current precision is set at: " + p + ")\nBubble Sort\nEquation solver\nExit");
     }
 
     private static void solver() {
+        Scanner slv = new Scanner(System.in);
         String ans;
         System.out.println("Do you want to round the result? (current precision is set at: " + p + ") Y/N");
-        ans = sc.nextLine();
+        ans = slv.nextLine();
         ans = ans.toLowerCase();
         if (ans.equals("y") || ans.equals("n")) {
             System.out.println("Equation format is ax + b = c\nEnter the numbers as follows:\na - first number");
             try {
-                double a = sc.nextDouble();
+                double a = slv.nextDouble();
                 System.out.println("b - second number");
-                double b = sc.nextDouble();
+                double b = slv.nextDouble();
                 System.out.println("c - third number");
-                double c = sc.nextDouble();
+                double c = slv.nextDouble();
                 double sum = c - b;
                 sum /= a;
                 if (ans.equals("y")) {
@@ -190,7 +196,7 @@ public class Main {
                 System.out.println("Unrecognized input");
             }
         } else {
-            System.out.println("Unrecognised input");
+            System.out.println("Unrecognised solver input");
         }
         System.out.println("Choose an option\nCalculate\nChange precision (current precision is set at: " + p + ")\nBubble Sort\nEquation solver\nExit");
     }
