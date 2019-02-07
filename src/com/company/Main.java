@@ -7,16 +7,16 @@ import java.util.Scanner;
 
 public class Main {
 
-    private static DecimalFormat decimalFormat = new DecimalFormat(".#");
+    private static DecimalFormat decimalFormat = new DecimalFormat("#.#");
     private static int p = 1;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         menu();
     }
 
-    private static void menu(){
+    private static void menu() throws InterruptedException {
         Scanner menuread = new Scanner(System.in);
-        System.out.println("Choose an option\nCalculate\nChange precision (current precision is set at: " + p + ")\nBubble Sort\nEquation solver\nExit");
+        menuText();
         while (true) {
             String choice;
             choice = menuread.nextLine();
@@ -43,38 +43,40 @@ public class Main {
         }
     }
 
-    private static void precision() {
+    private static void precision() throws InterruptedException {
         Scanner precis = new Scanner(System.in);
         System.out.println("Choose how many decimal points to display (1 - 5)");
         try {
             p = precis.nextInt();
             switch (p) {
                 case 1:
-                    decimalFormat = new DecimalFormat(".#");
+                    decimalFormat = new DecimalFormat("#.#");
                     break;
                 case 2:
-                    decimalFormat = new DecimalFormat(".##");
+                    decimalFormat = new DecimalFormat("#.##");
                     break;
                 case 3:
-                    decimalFormat = new DecimalFormat(".###");
+                    decimalFormat = new DecimalFormat("#.###");
                     break;
                 case 4:
-                    decimalFormat = new DecimalFormat(".####");
+                    decimalFormat = new DecimalFormat("#.####");
                     break;
                 case 5:
-                    decimalFormat = new DecimalFormat(".#####");
+                    decimalFormat = new DecimalFormat("#.#####");
                     break;
                 default:
                     System.out.println("Cannot display " + p + " decimal points");
                     p = 1;
+                    Thread.sleep(300);
             }
         } catch (InputMismatchException e) {
             System.out.println("Bad decimal point input");
+            Thread.sleep(300);
         }
-        System.out.println("Choose an option\nCalculate\nChange precision (current precision is set at: " + p + ")\nBubble Sort\nEquation solver\nExit");
+        menuText();
     }
 
-    private static void calc() {
+    private static void calc() throws InterruptedException {
         Scanner calcu = new Scanner(System.in);
         System.out.println("Enter two numbers and an operator and spaces between them (Ex. 12 + 15)");
         String insertVal = calcu.nextLine();
@@ -119,18 +121,20 @@ public class Main {
                 } else {
                     System.out.println("Result: " + decimalFormat.format(result));
                 }
-                System.out.println("Choose an option\nCalculate\nChange precision (current precision is set at: " + p + ")\nBubble Sort\nEquation solver\nExit");
+                menuText();
             } else {
                 System.out.println("Bad equation format");
-                System.out.println("Choose an option\nCalculate\nChange precision (current precision is set at: " + p + ")\nBubble Sort\nEquation solver\nExit");
+                Thread.sleep(300);
+                menuText();
             }
-        } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+        } catch (NumberFormatException | ArrayIndexOutOfBoundsException | InterruptedException e) {
             System.out.println("Unrecognised calculator command");
-            System.out.println("Choose an option\nCalculate\nChange precision (current precision is set at: " + p + ")\nBubble Sort\nEquation solver\nExit");
+            Thread.sleep(300);
+            menuText();
         }
     }
 
-    private static void sort() {
+    private static void sort() throws InterruptedException {
         Scanner sc = new Scanner(System.in);
         int temp;
         int amm;
@@ -142,6 +146,7 @@ public class Main {
             if (amm > 0) {
                 int[] sorter = new int[amm];
 
+                Thread.sleep(300);
                 System.out.println("Enter the " + amm + " numbers to sort (type in one number and press enter, then keep repeating till the desired amount is reached");
 
                 for (int i = 0; i < amm; i++) {
@@ -160,25 +165,32 @@ public class Main {
                 System.out.println("Sorted numbers: ");
                 for (int s = 0; s < amm; s++) {
                     System.out.print(sorter[s] + " ");
+                    Thread.sleep(300);
                 }
             } else {
                 System.out.println("Nothing to sort");
+                Thread.sleep(300);
             }
-        } catch (InputMismatchException e) {
+            System.out.println();
+        } catch (InputMismatchException | InterruptedException e) {
             System.out.println("Unrecognised sorter input");
+            Thread.sleep(300);
         }
-        System.out.println();
-        System.out.println("Choose an option\nCalculate\nChange precision (current precision is set at: " + p + ")\nBubble Sort\nEquation solver\nExit");
+        menuText();
     }
 
-    private static void solver() {
+    private static void solver() throws InterruptedException {
         Scanner slv = new Scanner(System.in);
         String ans;
         System.out.println("Do you want to round the result? (current precision is set at: " + p + ") Y/N");
         ans = slv.nextLine();
         ans = ans.toLowerCase();
         if (ans.equals("y") || ans.equals("n")) {
-            System.out.println("Equation format is ax + b = c\nEnter the numbers as follows:\na - first number");
+            System.out.println("Equation format is ax + b = c");
+            Thread.sleep(300);
+            System.out.println("Enter the numbers as follows:");
+            Thread.sleep(300);
+            System.out.println("a - first number");
             try {
                 double a = slv.nextDouble();
                 System.out.println("b - second number");
@@ -198,6 +210,20 @@ public class Main {
         } else {
             System.out.println("Unrecognised solver input");
         }
-        System.out.println("Choose an option\nCalculate\nChange precision (current precision is set at: " + p + ")\nBubble Sort\nEquation solver\nExit");
+        menuText();
+    }
+
+    private static void menuText() throws InterruptedException {
+        System.out.println("Choose an option");
+        Thread.sleep(300);
+        System.out.println("Calculate");
+        Thread.sleep(300);
+        System.out.println("Change precision (current precision is set at: " + p + ")");
+        Thread.sleep(300);
+        System.out.println("Bubble Sort");
+        Thread.sleep(300);
+        System.out.println("Equation solver");
+        Thread.sleep(300);
+        System.out.println("Exit");
     }
 }
