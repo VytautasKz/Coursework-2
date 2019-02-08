@@ -15,31 +15,38 @@ public class Main {
     }
 
     private static void menu() throws InterruptedException {
-        Scanner menuread = new Scanner(System.in);
+        Scanner menuRead = new Scanner(System.in);
         menuText();
         while (true) {
             String choice;
-            choice = menuread.nextLine();
+            choice = menuRead.nextLine();
             choice = choice.toLowerCase();
+            choice = choice.trim();
             switch (choice) {
                 case "calculate":
+                case "1":
                     calc();
                     break;
                 case "change precision":
+                case "2":
                     precision();
                     break;
                 case "bubble sort":
+                case "3":
                     sort();
                     break;
                 case "equation solver":
+                case "4":
                     solver();
                     break;
                 case "exit":
+                case "5":
                     return;
                 default:
                     System.out.println("Bad menu input");
-
+                    break;
             }
+
         }
     }
 
@@ -216,14 +223,14 @@ public class Main {
     private static void menuText() throws InterruptedException {
         System.out.println("Choose an option");
         Thread.sleep(300);
-        System.out.println("Calculate");
+        System.out.println("1. Calculate");
         Thread.sleep(300);
-        System.out.println("Change precision (current precision is set at: " + p + ")");
+        System.out.println("2. Change precision (current precision is set at: " + p + ")");
         Thread.sleep(300);
-        System.out.println("Bubble Sort");
+        System.out.println("3. Bubble Sort");
         Thread.sleep(300);
-        System.out.println("Equation solver");
+        System.out.println("4. Equation solver");
         Thread.sleep(300);
-        System.out.println("Exit");
+        System.out.println("5. Exit");
     }
 }
