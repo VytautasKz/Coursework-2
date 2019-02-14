@@ -144,46 +144,45 @@ public class Main {
     private static void sort() throws InterruptedException {
         Scanner sc = new Scanner(System.in);
         int temp;
-        int amm;
 
-        System.out.println("Enter how many numbers to sort");
+        System.out.println("Enter the numbers to sort(e.g 57348567348634)");
         try {
-            amm = sc.nextInt();
+            String raw = sc.nextLine();
+            if (!raw.isEmpty()) {
+                char[] list = raw.toCharArray();
+                int[] num = new int[list.length];
 
-            if (amm > 0) {
-                int[] sorter = new int[amm];
+                for (int i = 0; i < list.length; i++) {
 
-                Thread.sleep(300);
-                System.out.println("Enter the " + amm + " numbers to sort (type in one number and press enter, then keep repeating till the desired amount is reached");
-
-                for (int i = 0; i < amm; i++) {
-                    sorter[i] = sc.nextInt();
+                    num[i] = list[i] - '0';
                 }
-
-                for (int j = 0; j < (amm - 1); j++) {
-                    for (int k = 0; k < amm - 1; k++) {
-                        if (sorter[k] > sorter[k + 1]) {
-                            temp = sorter[k];
-                            sorter[k] = sorter[k + 1];
-                            sorter[k + 1] = temp;
+                for (int j = 0; j < (list.length - 1); j++) {
+                    for (int k = 0; k < list.length - 1; k++) {
+                        if (num[k] > num[k + 1]) {
+                            temp = num[k];
+                            num[k] = num[k + 1];
+                            num[k + 1] = temp;
                         }
                     }
                 }
-                System.out.println("Sorted numbers: ");
-                for (int s = 0; s < amm; s++) {
-                    System.out.print(sorter[s] + " ");
-                    Thread.sleep(300);
+
+                for (int s = 0; s < list.length; s++) {
+                    System.out.print(num[s] + " ");
                 }
+
             } else {
                 System.out.println("Nothing to sort");
                 Thread.sleep(300);
             }
             System.out.println();
-        } catch (InputMismatchException | InterruptedException e) {
+        } catch (InputMismatchException |
+                InterruptedException e) {
             System.out.println("Unrecognised sorter input");
             Thread.sleep(300);
         }
+
         menuText();
+
     }
 
     private static void solver() throws InterruptedException {
