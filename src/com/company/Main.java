@@ -9,6 +9,8 @@ public class Main {
 
     private static DecimalFormat decimalFormat = new DecimalFormat("#.#");
     private static int p = 1;
+    private static int tick = 0;
+    private static int t = 0;
 
     public static void main(String[] args) throws InterruptedException {
         menu();
@@ -42,10 +44,14 @@ public class Main {
                 case "exit":
                 case "5":
                     return;
+                case "6":
+                    hello();
+                    break;
                 default:
                     System.out.println("Bad menu input");
                     break;
             }
+            tick++;
 
         }
     }
@@ -146,39 +152,32 @@ public class Main {
         int temp;
 
         System.out.println("Enter the numbers to sort(e.g 57348567348634)");
-        try {
-            String raw = sc.nextLine();
-            if (!raw.isEmpty()) {
-                char[] list = raw.toCharArray();
-                int[] num = new int[list.length];
+        String raw = sc.nextLine();
+        if (raw.matches("[a-zA-z]+")) {
+            System.out.println("Input mismatch");
+        } else {
+            char[] list = raw.toCharArray();
+            int[] num = new int[list.length];
 
-                for (int i = 0; i < list.length; i++) {
+            for (int i = 0; i < list.length; i++) {
 
-                    num[i] = list[i] - '0';
-                }
-                for (int j = 0; j < (list.length - 1); j++) {
-                    for (int k = 0; k < list.length - 1; k++) {
-                        if (num[k] > num[k + 1]) {
-                            temp = num[k];
-                            num[k] = num[k + 1];
-                            num[k + 1] = temp;
-                        }
+                num[i] = list[i] - '0';
+            }
+            for (int j = 0; j < (list.length - 1); j++) {
+                for (int k = 0; k < list.length - 1; k++) {
+                    if (num[k] > num[k + 1]) {
+                        temp = num[k];
+                        num[k] = num[k + 1];
+                        num[k + 1] = temp;
                     }
                 }
-
-                for (int s = 0; s < list.length; s++) {
-                    System.out.print(num[s] + " ");
-                }
-
-            } else {
-                System.out.println("Nothing to sort");
-                Thread.sleep(300);
             }
+
+            for (int s = 0; s < list.length; s++) {
+                System.out.print(num[s] + " ");
+            }
+
             System.out.println();
-        } catch (InputMismatchException |
-                InterruptedException e) {
-            System.out.println("Unrecognised sorter input");
-            Thread.sleep(300);
         }
 
         menuText();
@@ -220,16 +219,45 @@ public class Main {
     }
 
     private static void menuText() throws InterruptedException {
-        System.out.println("Choose an option");
+        System.out.println("/////////////////////////////////////////////////////////////");
         Thread.sleep(300);
-        System.out.println("1. Calculate");
+        System.out.println("Choose an option                                            /");
         Thread.sleep(300);
-        System.out.println("2. Change precision (current precision is set at: " + p + ")");
+        System.out.println("1. Calculate                                                /");
         Thread.sleep(300);
-        System.out.println("3. Bubble Sort");
+        System.out.println("2. Change precision (current precision is set at: " + p + ")        /");
         Thread.sleep(300);
-        System.out.println("4. Equation solver");
+        System.out.println("3. Bubble Sort                                              /");
         Thread.sleep(300);
-        System.out.println("5. Exit");
+        System.out.println("4. Equation solver                                          /");
+        Thread.sleep(300);
+        System.out.println("5. Exit                                                     /");
+        Thread.sleep(300);
+        if (tick == 0) {
+            System.out.println("6. ???");
+            Thread.sleep(300);
+            tick++;
+        }
+        System.out.println("/////////////////////////////////////////////////////////////");
     }
+
+    private static void hello() {
+        if (tick == 0 || t == 0) {
+            System.out.println("                     Created by:");
+            System.out.println();
+            System.out.println("  #####   #####   #####  #       #######   ###     ###   ");
+            System.out.println(" #     # #     # #     # #    #  #    #   #   #   #   #  ");
+            System.out.println(" #     # #       #     # #    #      #   #     # #     # ");
+            System.out.println("  #####  ######   ###### #    #     #    #     # #     # ");
+            System.out.println(" #     # #     #       # #######   #     #     # #     # ");
+            System.out.println(" #     # #     # #     #      #    #      #   #   #   #  ");
+            System.out.println("  #####   #####   #####       #    #       ###     ###   ");
+            System.out.println();
+            System.out.println("                     Vytautas Kuzma");
+            t++;
+        } else {
+            System.out.println("Bad input");
+        }
+    }
+
 }
