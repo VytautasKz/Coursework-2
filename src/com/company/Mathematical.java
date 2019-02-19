@@ -5,6 +5,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 class Mathematical {
+
     static void calc() throws InterruptedException {
         Scanner calcu = new Scanner(System.in); //Creating a scanner
         System.out.println("Enter two numbers and an operator and spaces between them (Ex. 12 + 15)");
@@ -60,41 +61,6 @@ class Mathematical {
             Thread.sleep(300);
             Main.menuText();
         }
-    }
-
-    static void solver() throws InterruptedException {
-        Scanner slv = new Scanner(System.in);   //Create scanner
-        String ans; //For checking if user wants to round
-        System.out.println("Do you want to round the result? (current precision is set at: " + Main.p + ") Y/N");
-        ans = slv.nextLine();   //read ans
-        ans = ans.toLowerCase();    //make ans lowercase
-        if (ans.equals("y") || ans.equals("n")) { //check if ans has a valid choice
-            System.out.println("Equation format is ax + b = c");
-            Thread.sleep(300);
-            System.out.println("Enter the numbers as follows:");
-            Thread.sleep(300);
-            System.out.println("a - first number");
-            try {
-                //read numbers and calculate
-                double a = slv.nextDouble();
-                System.out.println("b - second number");
-                double b = slv.nextDouble();
-                System.out.println("c - third number");
-                double c = slv.nextDouble();
-                double sum = c - b;
-                sum /= a;
-                if (ans.equals("y")) {  //round result if ans was y
-                    System.out.println("X = " + Main.decimalFormat.format(sum));
-                } else {
-                    System.out.println("X = " + sum);
-                }
-            } catch (InputMismatchException e) {
-                System.out.println("Unrecognized input");
-            }
-        } else {
-            System.out.println("Unrecognised solver input");
-        }
-        Main.menuText();
     }
 
     static void precision() throws InterruptedException {
@@ -188,5 +154,113 @@ class Mathematical {
 
     private static double div(double num1, double num2) {
         return num1 / num2; //return division
+    }
+}
+
+//equations class
+class Equations {
+    private static double sum;
+    private static double a;
+    private static double b;
+    private static double c;
+
+    static void solver() throws InterruptedException {
+        Scanner slv = new Scanner(System.in);
+        System.out.println("Which equation would you like to use?");
+        Thread.sleep(300);
+        System.out.println("1. Linear: ax + b = c");
+        Thread.sleep(300);
+        System.out.println("2. Quadratic: ax^2 + bx + c");
+        Thread.sleep(300);
+        System.out.println("3. Cancel");
+        while (true) {
+            String ch;
+            ch = slv.nextLine();
+            ch.toLowerCase();
+            ch.trim();
+
+            switch (ch) {
+                case "1":
+                case "linear":
+                    linear();
+                    return;
+                case "2":
+                case "quadratic":
+                    quadratic();
+                    return;
+                case "cancel":
+                case "3":
+                    return;
+                default:
+                    System.out.println("Unrecognised choice");
+            }
+        }
+    }
+
+    private static void linear() throws InterruptedException {
+        Scanner li = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter the numbers as follows:\na- first number");
+        try {
+            //read numbers and calculate
+            a = li.nextDouble();
+            System.out.println("b - second number");
+            b = li.nextDouble();
+            System.out.println("c - third number");
+            c = li.nextDouble();
+
+        } catch (InputMismatchException e) {
+            System.out.println("Unrecognized input, returning to equation choice");
+            return;
+        }
+
+        sum = c - b;
+        sum /= a;
+        System.out.println("Would you like to round the result? (Current precision is set to " + Main.p + ")");
+        String ans;
+        ans = scanner.nextLine();
+        if (ans.equals("y")) {  //round result if ans was y
+            System.out.println("X = " + Main.decimalFormat.format(sum));
+        } else if (ans.equals("n")) {
+            System.out.println("X = " + sum);
+        } else {
+            System.out.println("Unrecognised input, rounding by default");
+            Thread.sleep(300);
+            System.out.println("X = " + Main.decimalFormat.format(sum));
+
+        }
+    }
+
+    private static void quadratic() throws InterruptedException {
+        Scanner quad = new Scanner(System.in);
+        System.out.println("Input numbers as follows:\na - first number");
+        try {
+            a = quad.nextDouble();
+            System.out.println("b - second number");
+            b = quad.nextDouble();
+            System.out.println("c - third number");
+            c = quad.nextDouble();
+        } catch (InputMismatchException e) {
+            System.out.println("Input mismatch, returning to equation choices");
+            return;
+        }
+
+        double d = Math.pow(b, 2) - 4 * a * c;
+
+        if (d > 0) {
+            System.out.println("There are two roots");
+            Thread.sleep(300);
+            System.out.println(((-b + Math.sqrt(d)) / (2 * a)));
+            Thread.sleep(300);
+            System.out.println(((-b - Math.sqrt(d)) / (2 * a)));
+        } else if (d == 0) {
+            System.out.println("There is only one root");
+            Thread.sleep(300);
+            System.out.println(((-b + Math.sqrt(d)) / (2 * a)));
+        } else {
+            System.out.println("There are no roots");
+            Thread.sleep(300);
+            System.out.println("The discriminant was: " + d);
+        }
     }
 }

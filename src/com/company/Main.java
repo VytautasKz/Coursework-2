@@ -39,7 +39,8 @@ public class Main {
                     break;
                 case "equation solver":
                 case "4":
-                    Mathematical.solver();
+                    Equations.solver();
+                    menuText();
                     break;
                 case "exit":
                 case "5":
@@ -51,7 +52,7 @@ public class Main {
                     System.out.println("Bad menu input");
                     break;
             }
-            Main.tick++;
+            tick++;
         }
     }
 
