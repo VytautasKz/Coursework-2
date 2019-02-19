@@ -1,18 +1,58 @@
 package com.company;
 
 import java.text.DecimalFormat;
+import java.util.Scanner;
 
 
 public class Main {
 
     static DecimalFormat decimalFormat = new DecimalFormat("#.#"); //Setting a default value for decimalFormat
     static int p = 1; //Initialising a variable needed for decimalFormat
-    static int tick = 0; //Simple ticker variable
-    static int t = 0; //Simple ticker variable
+    private static int tick = 0; //Simple ticker variable
+    private static int t = 0; //Simple ticker variable
 
     public static void main(String[] args) throws InterruptedException {
         //Calling menu
-        Menu.menu();
+        menu();
+    }
+
+    private static void menu() throws InterruptedException {
+        Scanner menuRead = new Scanner(System.in);  //Creating a scanner
+        menuText();    //Calling method menuText
+        while (true) {
+            String choice;                  //Creating a variable to use in switch
+            choice = menuRead.nextLine();   //Reading input
+            choice = choice.toLowerCase();  //Making input lowercase
+            choice = choice.trim();         //Removes spaces from beginning and end of string
+            switch (choice) {               //Switch compares variable choice to see if it is equal to the cases
+                case "calculate":
+                case "1":
+                    Mathematical.calc();
+                    break;
+                case "change precision":
+                case "2":
+                    Mathematical.precision();
+                    break;
+                case "bubble sort":
+                case "3":
+                    Mathematical.sort();
+                    break;
+                case "equation solver":
+                case "4":
+                    Mathematical.solver();
+                    break;
+                case "exit":
+                case "5":
+                    return;
+                case "6":
+                    hello();
+                    break;
+                default:                    //Defaults to here if choice does not match anything
+                    System.out.println("Bad menu input");
+                    break;
+            }
+            Main.tick++;
+        }
     }
 
     static void menuText() throws InterruptedException {
@@ -39,4 +79,24 @@ public class Main {
         System.out.println("/////////////////////////////////////////////////////////////");
     }
 
+    private static void hello() throws InterruptedException {
+        if (Main.tick == 0 || Main.t == 0) {
+            System.out.println("                     Created by:");
+            System.out.println();
+            System.out.println("  #####   #####   #####  #       #######   ###     ###   ");
+            System.out.println(" #     # #     # #     # #    #  #    #   #   #   #   #  ");
+            System.out.println(" #     # #       #     # #    #      #   #     # #     # ");
+            System.out.println("  #####  ######   ###### #    #     #    #     # #     # ");
+            System.out.println(" #     # #     #       # #######   #     #     # #     # ");
+            System.out.println(" #     # #     # #     #      #    #      #   #   #   #  ");
+            System.out.println("  #####   #####   #####       #    #       ###     ###   ");
+            System.out.println();
+            System.out.println("                     Vytautas Kuzma");
+            Main.t++;
+        } else {
+            System.out.println("Bad input");
+        }
+
+        Main.menuText();
+    }
 }
