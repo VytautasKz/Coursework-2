@@ -159,13 +159,14 @@ class Mathematical {
 
 //equations class
 class Equations {
-    private static double sum;
+    private static double sum;  //defining global variables for the linear and quadratic methods
     private static double a;
     private static double b;
     private static double c;
 
     static void solver() throws InterruptedException {
-        Scanner slv = new Scanner(System.in);
+        Scanner slv = new Scanner(System.in);   //creating scanner for solver method
+        //listing options
         System.out.println("Which equation would you like to use?");
         Thread.sleep(300);
         System.out.println("1. Linear: ax + b = c");
@@ -173,54 +174,60 @@ class Equations {
         System.out.println("2. Quadratic: ax^2 + bx + c");
         Thread.sleep(300);
         System.out.println("3. Cancel");
-        while (true) {
-            String ch;
-            ch = slv.nextLine();
-            ch.toLowerCase();
-            ch.trim();
+        while (true) {  //input validation loop
+            String ch;  //defining string variable
+            ch = slv.nextLine();    //setting ch through the scanner
+            ch.toLowerCase();       //converting to lowercase
+            ch.trim();              //removing whitespaces
 
-            switch (ch) {
+            switch (ch) {           //comparing ch to cases and running code when matched
                 case "1":
                 case "linear":
-                    linear();
+                    linear();       //calling linear method
                     return;
                 case "2":
                 case "quadratic":
-                    quadratic();
+                    quadratic();    //calling quadratic method
                     return;
                 case "cancel":
                 case "3":
-                    return;
+                    return;         //returning to main
                 default:
                     System.out.println("Unrecognised choice");
             }
         }
     }
 
-    private static void linear() throws InterruptedException {
-        Scanner li = new Scanner(System.in);
-        Scanner scanner = new Scanner(System.in);
+    private static void inputScan() {
+        Scanner in = new Scanner(System.in);        //creating another scanner for linear method, so it does not interfere with other method scanners
         System.out.println("Enter the numbers as follows:\na- first number");
-        try {
-            //read numbers and calculate
-            a = li.nextDouble();
+        try {                   //try and catch input mismatch
+            //read numbers
+            a = in.nextDouble();
             System.out.println("b - second number");
-            b = li.nextDouble();
+            b = in.nextDouble();
             System.out.println("c - third number");
-            c = li.nextDouble();
-
+            c = in.nextDouble();
         } catch (InputMismatchException e) {
-            System.out.println("Unrecognized input, returning to equation choice");
-            return;
+            System.out.println("Input mismatch");
+            inputScan();
         }
+    }
 
+    private static void linear() throws InterruptedException {
+        Scanner scanner = new Scanner(System.in);   //scanner for rounding
+        inputScan();
+
+        //calculating linear equation
         sum = c - b;
         sum /= a;
         System.out.println("Would you like to round the result? (Current precision is set to " + Main.p + ")");
         String ans;
         ans = scanner.nextLine();
-        if (ans.equals("y")) {  //round result if ans was y
-            System.out.println("X = " + Main.decimalFormat.format(sum));
+
+        //checking if result needs to be rounded
+        if (ans.equals("y")) {
+            System.out.println("X = " + Main.decimalFormat.format(sum));    //decimalFormat rounds result to set precision
         } else if (ans.equals("n")) {
             System.out.println("X = " + sum);
         } else {
@@ -232,24 +239,15 @@ class Equations {
     }
 
     private static void quadratic() throws InterruptedException {
-        Scanner quad = new Scanner(System.in);
-        System.out.println("Input numbers as follows:\na - first number");
-        try {
-            a = quad.nextDouble();
-            System.out.println("b - second number");
-            b = quad.nextDouble();
-            System.out.println("c - third number");
-            c = quad.nextDouble();
-        } catch (InputMismatchException e) {
-            System.out.println("Input mismatch, returning to equation choices");
-            return;
-        }
+        inputScan();
 
-        double d = Math.pow(b, 2) - 4 * a * c;
+        double d = Math.pow(b, 2) - 4 * a * c;                          //calculating discriminant
 
+        //depending on result of discriminant, appropriate answer is outputted
         if (d > 0) {
             System.out.println("There are two roots");
             Thread.sleep(300);
+            //calculating roots
             System.out.println(((-b + Math.sqrt(d)) / (2 * a)));
             Thread.sleep(300);
             System.out.println(((-b - Math.sqrt(d)) / (2 * a)));

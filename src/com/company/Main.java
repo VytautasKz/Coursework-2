@@ -52,7 +52,6 @@ public class Main {
                     System.out.println("Bad menu input");
                     break;
             }
-            tick++;
         }
     }
 
